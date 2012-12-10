@@ -1,0 +1,12 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <p:outputPanel styleClass="popups">
+      <p:dialog id="ajaxErrorDialog" header="Error: " resizable="false" dynamic="false" modal="true" draggable="false" widgetVar="ajaxErrorDialog">  
+            <div class="popups-content">
+                <h:outputText styleClass="note" value="View expired ? " /><br />
+                <a href="#" onclick="retrieval()">Click here to try refresh the current view.(This normally fixs the problem)</a>
+            </div>
+        </p:dialog>
+    </p:outputPanel>     
+</div>

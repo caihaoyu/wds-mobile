@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence">
+  <persistence-unit name="sa_wds" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>au.com.satech.wds.model.Survey</class>
+    <class>au.com.satech.wds.model.Page</class>
+    <class>au.com.satech.wds.model.Question</class>
+    <class>au.com.satech.wds.model.Answer</class>
+    <class>au.com.satech.wds.model.Columnchoice</class>
+    <class>au.com.satech.wds.model.Subquestion</class>
+    <class>au.com.satech.wds.model.PageBranch</class>
+    <class>au.com.satech.wds.model.Condition</class>
+    <class>au.com.satech.wds.model.Result</class>
+    <class>au.com.satech.wds.model.BranchItem</class>
+    <class>au.com.satech.wds.model.BranchItemRule</class>
+    <class>au.com.satech.wds.model.Scenario</class>
+    <class>au.com.satech.wds.model.Scenariocc</class>
+    <class>au.com.satech.wds.model.SurveyResponse</class>
+    <class>au.com.satech.wds.model.PageResponse</class>
+    <class>au.com.satech.wds.model.QuestionResponse</class>
+    <class>au.com.satech.wds.model.Entry</class>
+    <class>au.com.satech.wds.model.AnswerResponse</class>
+    <class>au.com.satech.wds.model.SubQuestionResponse</class>
+    <class>au.com.satech.wds.model.ColumnChoiceResponse</class>
+    <properties>
+      
+      <!--      <property name="hibernate.hbm2ddl.auto" value="validate"/>-->
+      <property name="hibernate.cache.use_second_level_cache" value="true"/>
+      <property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.SingletonEhCacheProvider"/>
+      <property name="hibernate.search.default.directory_provider" value="org.hibernate.search.store.FSDirectoryProvider"/>
+      <property name="hibernate.search.default.indexBase" value="../../../wds-lucene-index/lucene/indexes"/>
+      <property name="hibernate.search.default.batch.merge_factor" value="10"/>
+      <property name="hibernate.search.default.batch.max_buffered_docs" value="10"/>
+      <property name="hibernate.hbm2ddl.auto" value="validate"/>
+      <!--DEBUG-->
+      <property name="hibernate.show_sql" value="true"/>
+    </properties>
+  </persistence-unit>
+</persistence>

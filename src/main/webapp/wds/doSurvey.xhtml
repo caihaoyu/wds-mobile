@@ -1,0 +1,243 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pm="http://primefaces.org/mobile"
+        xmlns:c="http://java.sun.com/jsp/jstl/core" 
+        xmlns:w="http://www.wds.au/ui"
+        contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+    <pm:page title="SurveyList" >
+        <pm:view id="Surveying"  title="Surveying">
+            <pm:header title="#{surveyingView.surveyJSFModel.survey.surveytitle}" swatch="b">
+                <f:facet name="left"><p:button value="Back" href="/faces/wds/surveyList.xhtml" icon="back" /> </f:facet>
+            </pm:header>
+            <pm:content>
+                <h:form id="form" >
+                    <ui:include src="./popup/surveying-pop.xhtml"/>
+                    <f:event type="preRenderView" listener="#{surveyingView.preRenderView}"/>
+                    <!--page start-->
+                     <a name="anchor"/>
+                    <p:outputPanel id="preview-survey-page-panel">
+                        <h:panelGroup>  
+                            <h:outputText value="Accomplishment ratio: "/>  
+                            <h:outputText id="output" value="#{surveyingView.surveyJSFModel.ratio}"/>
+                            <h:outputText value="%"/>  
+                        </h:panelGroup>
+                        <p:panel closable="false" header="#{surveyingView.surveyJSFModel.currPage.pagetitle}" style="text-align:center">
+                            <h:selectOneMenu style="white-space: normal;width: 100%" styleClass="selectItemclass" value="#{surveyingView.selectedItemId}" >
+                                <p:ajax update=":form:preview-survey-page-panel" partialSubmit="true" listener="#{surveyingView.ajax}"/>
+                                <f:selectItems itemLabel="#{selectitems.question.questiontitle}"   itemValue="#{selectitems.branchitemid}" value="#{surveyingView.notHiddenItemList}" var="selectitems"></f:selectItems>
+                            </h:selectOneMenu>
+                            <p:dataTable id="itemsTable" var="item" value="#{surveyingView.currItem}">
+                                <p:column>
+                                    <div data-role="content">
+                                        <p:outputPanel rendered="#{item.question.answering}" layout="block"  style="text-align:center">
+                                            <p style="white-space: normal;width: 100%">Q#{item.index}: #{item.question.questiontitle}</p>
+                                            <p:outputPanel rendered="#{item.mandatory}">
+                                                (<span id="notice-star">*</span>)
+                                            </p:outputPanel>
+                                            <p:outputPanel rendered="#{item.question.allowdescription}">
+                                                <!--左姐这的文字换成图片-->
+                                                <p:commandLink  update=":form:descriptionDlg" value="description"   actionListener="#{surveyingView.displayDescription(item.question.description)}"/>
+                                            </p:outputPanel>
+                                        </p:outputPanel>
+                                    </div>    
+                                    <p:outputPanel rendered="#{!item.question.answering}">
+                                        <p style="white-space: normal;width: 100%">Q#{item.index}: #{item.question.questiontitle}</p>
+                                        <p:outputPanel rendered="#{item.mandatory}">
+                                            (<span id="notice-star">*</span>)
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{item.question.allowdescription}">
+                                            <!--左姐这的按钮文字换成图片-->
+                                            <p:commandLink  update=":form:descriptionDlg" value="description"   actionListener="#{surveyingView.displayDescription(item.question.description)}"/>
+                                        </p:outputPanel>
+                                    </p:outputPanel>
+
+
+
+                                    <p:outputPanel rendered="#{item.question.answering}">
+                                        <!-- Free text -->
+                                        <p:inputText value="#{item.entry.answercontent}" rendered="#{item.question.questiontype eq 1 and item.question.answertype eq 1 and item.question.answermask == ''}" />
+                                        <p:inputMask value="#{item.entry.answercontent}" mask="#{item.question.answermask}" rendered="#{item.question.questiontype eq 1 and item.question.answertype eq 1 and item.question.answermask != ''}" />
+                                        <p:inputTextarea value="#{item.entry.answercontent}" rendered="#{item.question.questiontype eq 1 and item.question.answertype eq 2}" />
+                                        <p:inputTextarea  value="#{item.entry.answercontent}" rendered="#{item.question.questiontype eq 1 and item.question.answertype eq 3}" />
+
+                                        <!-- Rating -->
+                                        <p:rating value="#{item.entry.rating}" rendered="#{item.question.questiontype eq 2}" stars="#{item.question.rating}" />
+
+                                        <!-- Choice -->
+                                        <!-- single -->
+                                        <p:selectOneRadio value="#{item.entry.ar_id}" rendered="#{item.question.questiontype eq 3 and !item.question.allowmultipile}" layout="pageDirection">
+                                            <f:selectItems var="answer" value="#{item.question.answersList}" itemLabel="#{answer.answertitle}" itemValue="#{answer.answerid}" />
+                                        </p:selectOneRadio>
+
+                                        <!-- multiple -->
+                                        <p:selectManyCheckbox value="#{item.responseAnswerIds}" rendered="#{item.question.questiontype eq 3 and item.question.allowmultipile}" layout="pageDirection">  
+                                            <f:selectItems var="answer" value="#{item.question.answersList}" itemLabel="#{answer.answertitle}" itemValue="#{answer.answerid}" />
+                                        </p:selectManyCheckbox>
+
+
+                                        <h:outputText styleClass="paging-and-reordering-pages-panel-content-text" value="#{msgs['page.admin.previewSurvey.answer.customize.label']}" rendered="#{item.question.questiontype eq 3 and item.question.allowcustomized}" />
+                                        <p:inputText value="#{item.entry.answercontent}" rendered="#{item.question.questiontype eq 3 and item.question.allowcustomized}" />
+
+                                        <!-- Matrix -->
+                                        <p:dataTable var="subquestion" value="#{item.question.subquestionsList}" rendered="#{item.question.questiontype eq 4 and item.question.columntype ne 3}">
+                                            <p:column>
+                                                <h:outputText styleClass="paging-and-reordering-pages-panel-content-text" value="#{subquestion.subquestiontitle}" >
+                                                    <f:converter  converterId="stringLengthConverter"/>
+                                                    <f:attribute name="length" value="30" />
+                                                </h:outputText>
+                                            </p:column>
+                                            <p:column>
+                                                <!-- input -->
+                                                <p:inputText value="#{subquestion.entry.answercontent}" rendered="#{item.question.columntype eq 1}" />
+                                                <!-- rating -->
+                                                <p:rating value="#{subquestion.entry.rating}" rendered="#{item.question.columntype eq 2}" stars="#{item.question.rating}" />
+
+                                            </p:column>
+                                        </p:dataTable>
+
+                                        <!-- Matrix single -->
+                                        <p:outputPanel rendered="#{item.question.questiontype eq 4 and item.question.columntype eq 3 and !item.question.allowmultipile}">  
+                                            <ui:repeat value="#{item.question.subquestionsList}"  var="subquestion" >
+                                                <h:outputText value="#{subquestion.subquestiontitle}"/>
+                                                <p:selectOneRadio value="#{subquestion.entry.ccr_id}" style="width: 100%;vertical-align:text-bottom;text-align: center" >
+                                                    <f:selectItems value="#{item.question.columnchoicesList}" itemLabel="#{cc.columnchoicetitle}" itemValue="#{cc.columnchoiceid}" var="cc" />
+                                                </p:selectOneRadio>
+                                                <p:inputText value="#{subquestion.entry.answercontent}" rendered="#{item.question.columntype eq 3 and item.question.allowcustomized}" />
+                                            </ui:repeat>
+                                        </p:outputPanel>
+
+                                        <!-- Matrix multiple -->
+                                        <p:outputPanel rendered="#{item.question.questiontype eq 4 and item.question.columntype eq 3 and item.question.allowmultipile}">  
+                                            <ui:repeat value="#{item.question.subquestionsList}" var="subquestion">
+                                                <h:outputText value="#{subquestion.subquestiontitle}"/>
+                                                <p:selectManyCheckbox value="#{subquestion.responseColumnchoiceIds}" style="width: 100%;vertical-align:text-bottom;table-layout: auto;text-align: center" >
+                                                    <f:selectItems value="#{item.question.columnchoicesList}" itemLabel="#{cc.columnchoicetitle}" itemValue="#{cc.columnchoiceid}" var="cc" />
+                                                </p:selectManyCheckbox>
+                                                <p:inputText value="#{subquestion.entry.answercontent}" rendered="#{item.question.columntype eq 3 and item.question.allowcustomized}" />
+                                            </ui:repeat>
+                                        </p:outputPanel>
+                                    </p:outputPanel>
+                                    <p:outputPanel rendered="#{!item.question.answering}">
+                                        <!-- Free text -->
+                                        <p:inputText value="#{item.entry.answercontent}" rendered="#{item.question.questiontype eq 1 and item.question.answertype eq 1 and item.question.answermask == ''}" disabled="true" />
+                                        <p:inputMask value="#{item.entry.answercontent}" mask="#{item.question.answermask}" rendered="#{item.question.questiontype eq 1 and item.question.answertype eq 1 and item.question.answermask != ''}" disabled="true" />
+                                        <p:inputTextarea value="#{item.entry.answercontent}" rendered="#{item.question.questiontype eq 1 and item.question.answertype eq 2}" disabled="true" />
+                                        <p:inputTextarea  value="#{item.entry.answercontent}" rendered="#{item.question.questiontype eq 1 and item.question.answertype eq 3}" disabled="true" />
+
+                                        <!-- Rating -->
+                                        <p:rating value="#{item.entry.rating}" rendered="#{item.question.questiontype eq 2}" stars="#{item.question.rating}" disabled="true" />
+
+                                        <!-- Choice -->
+                                        <!-- single -->
+                                        <p:selectOneRadio value="#{item.entry.ar_id}" rendered="#{item.question.questiontype eq 3 and !item.question.allowmultipile}" disabled="true" layout="pageDirection">
+                                            <f:selectItems var="answer" value="#{item.question.answersList}" itemLabel="#{answer.answertitle}" itemValue="#{answer.answerid}" />
+                                        </p:selectOneRadio>
+
+                                        <!-- multiple -->
+                                        <p:selectManyCheckbox value="#{item.responseAnswerIds}" rendered="#{item.question.questiontype eq 3 and item.question.allowmultipile}" disabled="true" layout="pageDirection">  
+                                            <f:selectItems var="answer" value="#{item.question.answersList}" itemLabel="#{answer.answertitle}" itemValue="#{answer.answerid}" />
+                                        </p:selectManyCheckbox>
+
+
+                                        <h:outputText styleClass="paging-and-reordering-pages-panel-content-text-hidden" value="#{msgs['page.admin.previewSurvey.answer.customize.label']}" rendered="#{item.question.questiontype eq 3 and item.question.allowcustomized}" />
+                                        <p:inputText value="#{item.entry.answercontent}" rendered="#{item.question.questiontype eq 3 and item.question.allowcustomized}" disabled="true" />
+
+                                        <!-- Matrix -->
+                                        <p:dataTable var="subquestion" value="#{item.question.subquestionsList}" rendered="#{item.question.questiontype eq 4 and item.question.columntype ne 3}">
+                                            <p:column>
+                                                <h:outputText styleClass="paging-and-reordering-pages-panel-content-text-hidden" value="#{subquestion.subquestiontitle}" >
+                                                    <f:converter  converterId="stringLengthConverter"/>
+                                                    <f:attribute name="length" value="30" />
+                                                </h:outputText>
+                                            </p:column>
+                                            <p:column>
+                                                <!-- input -->
+                                                <p:inputText value="#{subquestion.entry.answercontent}" rendered="#{item.question.columntype eq 1}" disabled="true" />
+                                                <!-- rating -->
+                                                <p:rating value="#{subquestion.entry.rating}" rendered="#{item.question.columntype eq 2}" stars="#{item.question.rating}" disabled="true" />
+
+                                            </p:column>
+                                        </p:dataTable>
+
+                                        <!-- Matrix single -->
+                                        <p:outputPanel rendered="#{item.question.questiontype eq 4 and item.question.columntype eq 3 and !item.question.allowmultipile}">  
+
+                                            <ui:repeat value="#{item.question.subquestionsList}"  var="subquestion" >
+                                                <h:outputText value="#{subquestion.subquestiontitle}"/>
+                                                <p:selectOneRadio value="#{subquestion.entry.ccr_id}"   style="width: 100%;vertical-align:text-bottom;text-align: center" disabled="true" >
+                                                    <f:selectItems value="#{item.question.columnchoicesList}" itemLabel="#{cc.columnchoicetitle}" itemValue="#{cc.columnchoiceid}" var="cc" />
+                                                </p:selectOneRadio>
+                                                <p:inputText value="#{subquestion.entry.answercontent}" rendered="#{item.question.columntype eq 3 and item.question.allowcustomized}" disabled="true" />
+                                            </ui:repeat>
+                                        </p:outputPanel>
+
+                                        <!-- Matrix multiple -->
+                                        <p:outputPanel rendered="#{item.question.questiontype eq 4 and item.question.columntype eq 3 and item.question.allowmultipile}">  
+
+                                            <ui:repeat value="#{item.question.subquestionsList}" var="subquestion">
+                                                <h:outputText value="#{subquestion.subquestiontitle}"/>
+                                                <p:selectManyCheckbox value="#{subquestion.responseColumnchoiceIds}"  style="width: 100%;vertical-align:text-bottom;table-layout: auto;text-align: center" disabled="true" >
+                                                    <f:selectItems value="#{item.question.columnchoicesList}" itemLabel="#{cc.columnchoicetitle}" itemValue="#{cc.columnchoiceid}" var="cc" />
+                                                </p:selectManyCheckbox>
+                                                <p:inputText value="#{subquestion.entry.answercontent}" rendered="#{item.question.columntype eq 3 and item.question.allowcustomized}" disabled="true" />
+
+                                            </ui:repeat>
+                                        </p:outputPanel>
+                                    </p:outputPanel>
+                                    <br class="clearfloat"/>
+                                    <div>
+                                        <p:outputPanel rendered="#{item.question.answering}">
+                                            <p:commandButton value="save"  oncomplete="goToAnchor()" update=":form:popups,:form:preview-survey-page-panel" partialSubmit="true"   actionListener="#{surveyingView.saveAnswerValue}">
+                                            </p:commandButton>
+                                            <p:outputPanel rendered="#{!item.mandatory}">
+                                                <p:commandButton value="skip" update=":form:popups,:form:preview-survey-page-panel" partialSubmit="true" actionListener="#{surveyingView.skipCurrentQuestion(1)}">
+                                                </p:commandButton>
+                                            </p:outputPanel>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{!item.question.answering and item.question.answered eq 1}">
+                                            <p:commandLink update=":form:preview-survey-page-panel" actionListener="#{surveyingView.redoQuestion}">
+                                                <span>redo</span>
+                                            </p:commandLink>
+                                        </p:outputPanel>
+                                        <p:outputPanel rendered="#{!item.question.answering and item.question.answered eq -1}">
+                                            <p:commandLink update=":form:preview-survey-page-panel" actionListener="#{surveyingView.redoQuestion}">
+                                                <span>do</span>
+                                            </p:commandLink>
+                                        </p:outputPanel>
+                                    </div>
+                                </p:column>
+                            </p:dataTable>
+                            <br class="clearfloat"/>
+                            <p:outputPanel rendered="#{!surveyingView.surveyJSFModel.isLastPage}">
+                                <div>
+                                    <p:outputPanel rendered="#{surveyingView.surveyJSFModel.currPageAllFinished}">
+                                        <p:commandButton value="Continue"  update=":form:popups,:form:preview-survey-page-panel" actionListener="#{surveyingView.getNextPage(1)}">
+                                        </p:commandButton>
+                                    </p:outputPanel>
+                                </div>
+                            </p:outputPanel>
+                            <p:outputPanel rendered="#{surveyingView.surveyJSFModel.isLastPage}">
+                                <div class="commandlink_container">
+                                    <p:commandButton value="finish this survey" update=":form:popups,:form:preview-survey-page-panel" action="#{surveyingView.finishTheSurvey}">
+                                    </p:commandButton>
+                                </div>
+                            </p:outputPanel>
+                        </p:panel>
+                    </p:outputPanel>
+
+                    <br class="clearfloat"/>
+                    <script type="text/javascript">
+                        function goToAnchor(){
+                            location.href = "#anchor";
+                        }
+                    </script>
+                </h:form>       
+            </pm:content>
+        </pm:view>
+    </pm:page>    
+</f:view>
+

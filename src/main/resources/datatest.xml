@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<root>
+    <driver>chromedriver</driver>
+    
+    <question-url>http://localhost:8080/web/test/question-bank-portlet</question-url>
+    <survey-url>http://localhost:8080/web/test/survey-management</survey-url>
+    <index-url>http://localhost:8080/web/test/admin-portlet</index-url>
+    
+    <survey>
+        <title>Extract the Facts</title>
+        <description><![CDATA[How to Extract the Facts with a Web Design Client Questionnaire]]></description>
+        <welcometext><![CDATA[I recommend using this questionnaire before you write a Web design proposal. You should reserve your proposal-writing time for the best-qualified prospects, rather than everyone who asks for one.]]></welcometext>
+        <endtext><![CDATA[Whew! That’s quite a list of questions. And, truth be told, I don’t use every one of them every time. It’s important to respect your prospects’ time, even when you’re looking for long-term relationships.]]></endtext>
+        <supervisor>Martha Retallick</supervisor>
+        <email>M.Retallick@webforyou.com.au</email>
+        <active>1</active><!--1/yes 3/no-->
+        <language>1</language><!--1/yes 3/no-->
+        <saved>3</saved><!--1/yes 3/no-->
+        <isdescription>1</isdescription><!--1/yes 3/no-->
+    </survey>
+    
+    <editsurvey>
+        <title>Company-related questions</title>
+        <description>Company-related questions</description>
+        <welcometext>Before starting any project it’s essential to get the right preliminary information from your clients. This will help pave the way to a successful project, assist in bringing client’s vision into perspective and build a lasting relationship. Many of the questions below will also help in putting together an accurate quote for your client. Things such as deadlines, usage, etc. should take into account pricing.</welcometext>
+        <endtext>I also like to leave my clients with a field or extra room at the end where they can provide additional details and comments. Remember, being a graphic designer means you are a problem solver. You cannot solve a problem without knowing what the problem is – asking questions is a great start. What questions do you ask your clients prior to starting a project? Feel free to add to the above questions in the comments below.</endtext>
+        <supervisor>Brian Hoff</supervisor>
+        <email>B.Hoff@webforyou.com.au</email>
+        <active>3</active><!--1/yes 3/no-->
+        <language>3</language><!--1/yes 3/no-->
+        <saved>1</saved><!--1/yes 3/no-->
+        <isdescription>3</isdescription><!--1/yes 3/no-->
+    </editsurvey>
+    
+    <page>
+        <title>page title</title>
+        <header>page header</header>
+        <footer>page footer</footer>
+        <branch>1</branch><!--branch number-->
+    </page>
+    
+    <question>
+        <freetext>
+            <title>How would you describe your services and/or products?</title><!--button value:1/yes 2/no-->
+            <mask>1</mask><!--1/yes-->
+            <description>This is freetext</description>
+            <answertype>1</answertype><!--1/input 3/TextArea 5/TextArea(Rich)-->
+            <masktype>2</masktype><!--key type:2/date 3/phone-->
+        </freetext>
+        <freetext>
+            <title>What are the long term goals of your company?</title><!--button value:1/yes 2/no-->
+            <mask>1</mask>
+            <description>This is freetext</description>
+            <answertype>1</answertype><!--1/input 3/TextArea 5/TextArea(Rich)-->
+            <masktype>2</masktype><!--key type:2/date 3/phone-->
+        </freetext>
+        
+        
+        <updatafreetext>
+            <title>Who are your main competitors?</title>
+            <mask>0</mask>
+            <description></description>
+            <answertype>5</answertype><!--1/input 3/TextArea 5/TextArea(Rich)-->
+            <maskType>2</maskType><!--key type:2/date 3/phone-->
+        </updatafreetext>
+        <updatafreetext>
+            <title>How are you different from your competitors?</title>
+            <mask>1</mask>
+            <description>This is freetext</description>
+            <answertype>1</answertype><!--1/input 3/TextArea 5/TextArea(Rich)-->
+            <maskType>2</maskType><!--key type:2/date 3/phone-->
+        </updatafreetext>
+        
+        <rating>
+            <title>From 1 to 9, please rate your already exists content?</title>
+            <description></description>
+            <starnum>9</starnum><!--stars number: 1-9-->
+        </rating>
+        <rating>
+            <title>From 1 to 5, please rate your website cross-browser compatible</title>
+            <description></description>
+            <starnum>5</starnum><!--stars number: 1-9-->
+        </rating>
+        
+        <updatarating>
+            <title>From 1 to 5, how compliant is the website with W3C coding standards? Valid HTML/CSS?</title>
+            <description></description>
+            <starnum>5</starnum><!--stars number: 1-9-->
+        </updatarating>
+        <updatarating>
+            <title>From 1 to 8, does the copywriting style suit the website’s purpose and ‘speak’ to its target audience?</title>
+            <description></description>
+            <starnum>8</starnum><!--stars number: 1-9-->
+        </updatarating>
+        
+        <choice>
+            <title>How many times have you called our agency about this issue in the past month?</title>
+            <answernum>4</answernum><!--star number: 2-10 -->
+            <addanswernum>1</addanswernum>
+            <answertitle>Once</answertitle>
+            <answertitle>Twice</answertitle>
+            <answertitle>Three times</answertitle>
+            <description></description>
+            <multiple>1</multiple><!--1/yes 3/no-->
+            <customized>3</customized><!--1/yes 3/no-->
+        </choice>
+        <choice>
+            <title>Where do you live?</title>
+            <answernum>3</answernum><!--star number: 2-10 -->
+            <addanswernum>1</addanswernum>
+            <answertitle>North</answertitle>
+            <answertitle>South</answertitle>
+            <answertitle>East</answertitle>
+            <answertitle>West</answertitle>
+            <description></description>
+            <multiple>3</multiple><!--1/yes 3/no-->
+            <customized>1</customized><!--1/yes 3/no-->
+        </choice>
+        
+        <updatachoice>
+            <title>How would you rate our services?</title>
+            <answernum>4</answernum><!--eidt with choice-->
+            <addanswernum>1</addanswernum>
+            <answertitle>Excellent</answertitle>
+            <answertitle>Good</answertitle>
+            <answertitle>Fair</answertitle>
+            <answertitle>Poor</answertitle>
+            <description></description>
+            <multiple>3</multiple><!--1/yes 3/no-->
+            <customized>3</customized><!--1/yes 3/no-->
+        </updatachoice>
+        <updatachoice>
+            <title>What would you like the website to offer?</title>
+            <answernum>3</answernum><!--eidt with choice-->
+            <addanswernum>5</addanswernum>
+            <answertitle>A way for customers to keep updated with news</answertitle>
+            <answertitle><![CDATA[Case studies of work & general information]]></answertitle>
+            <answertitle><![CDATA[Take online orders & enquiries]]></answertitle>
+            <answertitle>Make secure transactions online</answertitle>
+            <answertitle>Send marketing emails</answertitle>
+            <answertitle>Manage business information (jobs/customers)</answertitle>
+            <answertitle>Ability to update the website content yourself</answertitle>
+            <answertitle>I'd like Digerati to update the site for me</answertitle>
+            <description></description>
+            <multiple>1</multiple><!--1/yes 3/no-->
+            <customized>1</customized><!--1/yes 3/no-->
+        </updatachoice>
+        
+        <matrix>
+            <title>What order of importance do you rank the following website features</title>
+            <columntype>3</columntype><!--1/input 2/rating 3/choice-->
+            <description>This is matrix</description>
+            <multiple>3</multiple><!--1/yes 3/no-->
+            <customized>3</customized><!--1/yes 3/no-->
+            <questionnum>4</questionnum><!--question number:for 1 to 9-->
+            <addquestionnum>1</addquestionnum>
+            <questiontitle>Top ranking by search engines</questiontitle>
+            <questiontitle>Easy Navigation</questiontitle>
+            <questiontitle>Clear information</questiontitle>
+            <questiontitle>Clever animation</questiontitle>
+            <questiontitle>Colourful pictures</questiontitle>
+            <choicenum>4</choicenum>
+            <addchoicenum>1</addchoicenum>
+            <choicetitle>Most</choicetitle>
+            <choicetitle>2nd</choicetitle>
+            <choicetitle>3rd</choicetitle>
+            <choicetitle>4th</choicetitle>
+            <choicetitle>5th</choicetitle>
+        </matrix>
+        <matrix>
+            <title>How much do you agree with each of the following statements</title>
+            <columntype>3</columntype><!--1/input 2/rating 3/choice-->
+            <description></description>
+            <multiple>3</multiple><!--1/yes 3/no-->
+            <customized>3</customized><!--1/yes 3/no-->
+            <questionnum>2</questionnum><!--question number:for 1 to 9-->
+            <addquestionnum>1</addquestionnum>
+            <questiontitle>My manager provides constructive criticism</questiontitle>
+            <questiontitle>Our medical plan provides adequate coverage</questiontitle>
+            <questiontitle>I would prefer to work longer hours on fewer days</questiontitle>
+            <choicenum>3</choicenum>
+            <addchoicenum>1</addchoicenum>
+            <choicetitle>Strongly Agree</choicetitle>
+            <choicetitle>Agree</choicetitle>
+            <choicetitle>Disagree</choicetitle>
+            <choicetitle>Strongly Disagree</choicetitle>
+        </matrix>
+        
+        
+        <updatamatrix>
+            <title>How much do you agree with each of the following statements</title>
+            <columntype>2</columntype><!--1/input 2/rating 3/choice-->
+            <description>This is matrix</description>
+            <multiple>1</multiple><!--1/yes 3/no-->
+            <customized>3</customized><!--1/yes 3/no-->
+            <questionnum>3</questionnum><!--question number:for 1 to 9-->
+            <addquestionnum>1</addquestionnum>
+            <questiontitle>My manager provides constructive criticism</questiontitle>
+            <questiontitle>Our medical plan provides adequate coverage</questiontitle>
+            <questiontitle>I would prefer to work longer hours on fewer days</questiontitle>
+            <questiontitle>I would like to have more holidays</questiontitle>
+        </updatamatrix>
+        <updatamatrix>
+            <title>What do you think about the following opinion of this company has:</title>
+            <columntype>1</columntype><!--1/input 3/rating 5/choice-->
+            <description>This is matrix</description>
+            <multiple>1</multiple><!--1/yes 3/no-->
+            <customized>1</customized><!--1/yes 3/no-->
+            <questionnum>3</questionnum><!--question number:for 1 to 9-->
+            <addquestionnum>1</addquestionnum>
+            <questiontitle>A good vacation policy</questiontitle>
+            <questiontitle>Good management feedback</questiontitle>
+            <questiontitle>Good medical insurance</questiontitle>
+            <questiontitle>High wages</questiontitle>
+        </updatamatrix>
+    </question>
+</root>

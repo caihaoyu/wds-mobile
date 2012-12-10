@@ -1,0 +1,63 @@
+<div
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core">
+    <p:outputPanel styleClass="popups" id="popups">
+        <p:dialog id="confirmSaveAnswer"
+                  header="Warning:"
+                  resizable="false" 
+                  dynamic="true" 
+                  modal="true" 
+                  draggable="false" 
+                   style="background: gray !important;" appendToBody="true"
+                  widgetVar="confirmSaveAnswer">
+            <div class="popups-content">#{surveyingView.confirmMessage}</div>
+            <div class="popups-buttons">
+                <p:outputPanel rendered="#{!surveyingView.surveyJSFModel.answeringItem.mandatory}">
+                    <p:commandButton id="confirmSaveAnswerBtn" value="skip" update=":form:preview-survey-page-panel"  action="#{surveyingView.skipCurrentQuestion(2)}">
+                    </p:commandButton>
+                </p:outputPanel>
+                <p:commandButton id="notSaveAnswerBtn" value="Back" onclick="confirmSaveAnswer.hide()">
+                </p:commandButton>
+            </div>
+        </p:dialog>
+        <p:dialog id="confirmGoToNextPage"
+                  header="Please confirm:"
+                  resizable="false" 
+                  dynamic="true" 
+                  modal="true" 
+                  draggable="false" 
+                  style="background: gray !important;" appendToBody="true"
+                  widgetVar="confirmGoToNextPage">
+            <div class="popups-content">#{surveyingView.confirmMessage}</div>
+            <div class="popups-buttons">
+                <p:outputPanel rendered="#{surveyingView.continueBut}">
+                    <p:commandButton  value="continue" id="confirmGoToNextPageBtn" update=":form:preview-survey-page-panel"  action="#{surveyingView.getNextPage(2)}">
+                    </p:commandButton >
+                </p:outputPanel>
+                <p:outputPanel rendered="#{surveyingView.finishBut}">
+                    <p:commandButton value="finish this survey" update=":form:popups,:form:preview-survey-page-panel" action="#{surveyingView.finishTheSurvey}" >
+                    </p:commandButton>
+                </p:outputPanel>
+                <p:commandButton  value="Back" id="notGoToNextPageBtn"  onclick="confirmGoToNextPage.hide()" >
+                </p:commandButton>
+            </div>
+        </p:dialog>
+        <p:dialog id="descriptionDlg"
+              header="Please Confirm:"
+              resizable="false" 
+              dynamic="false" 
+              modal="true" 
+               style="background: gray !important;" appendToBody="true"
+              draggable="false" 
+              widgetVar="descriptionDlg">
+        <div class="popups-content">Question Description:</div>
+        <span>#{surveyingView.descriptionString} </span>
+        <div class="popups-buttons">
+            <p:commandButton  value="Back"  onclick="descriptionDlg.hide()">
+             </p:commandButton>
+        </div>
+    </p:dialog>
+    </p:outputPanel>
+</div>

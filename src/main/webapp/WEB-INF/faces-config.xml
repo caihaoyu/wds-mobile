@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+     <component>
+        <component-type>au.com.satech.wds.web.component.SelectOneRadio</component-type>
+        <component-class>au.com.satech.wds.web.component.SelectOneRadio</component-class>
+    </component>
+    <component>
+        <component-type>au.com.satech.wds.web.component.SelectManyCheckbox</component-type>
+        <component-class>au.com.satech.wds.web.component.SelectManyCheckbox</component-class>
+    </component>    
+    <render-kit>
+        <renderer>
+            <component-family>au.com.satech.wds.web.component</component-family>
+            <renderer-type>au.com.satech.wds.web.renderer.MySelectOneRadioRenderer</renderer-type>
+            <renderer-class>au.com.satech.wds.web.renderer.MySelectOneRadioRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>au.com.satech.wds.web.component</component-family>
+            <renderer-type>au.com.satech.wds.web.renderer.MySelectManyCheckboxRenderer</renderer-type>
+            <renderer-class>au.com.satech.wds.web.renderer.MySelectManyCheckboxRenderer</renderer-class>
+        </renderer>
+    </render-kit>
+<application>
+   
+        <message-bundle>i18nFaces</message-bundle>
+        <!-- 
+    This is the JSF 1.2 ELResolver that delegates to the Spring root WebApplicationContext
+    resolving name references to Spring-defined beans. 
+        -->
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+        <resource-bundle>
+            <base-name>i18n</base-name>
+            <var>i18n</var>
+        </resource-bundle>
+    </application>
+
+
+</faces-config>
